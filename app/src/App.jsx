@@ -158,7 +158,7 @@ function App() {
           <nav className="navbar">
             <div className="navbar__logo">
               <ion-icon name="paw-outline"></ion-icon>
-              <p className="navbar__text-logo">イカワグラム</p>
+              <p className="navbar__text-logo">更新グラム</p>
             </div>
 
             <div className="navbar__search-bar">
