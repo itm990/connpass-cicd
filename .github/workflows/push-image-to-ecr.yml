@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-1
-  REPOSITORY: github-actions-test
+  REPOSITORY: connpass-cicd-repo
 
 permissions:
   id-token: write
