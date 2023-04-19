@@ -2,7 +2,7 @@ name: deploy aws resources
 
 on:
   push:
-    branches: ['deploy']
+    branches: ['infra','deploy']
 
 env:
   AWS_REGION: ap-northeast-1
