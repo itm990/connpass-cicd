@@ -10,11 +10,10 @@ env:
 jobs:
   aws_cdk:
     runs-on: ubuntu-latest
-    steps:
-
-      - name: test step
-        run: ls infra
+    defaults:
+      run:
         working-directory: infra
+    steps:
 
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
