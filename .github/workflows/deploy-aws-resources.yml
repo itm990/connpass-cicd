@@ -2,7 +2,7 @@ name: deploy aws resources
 
 on:
   push:
-    branches: ['infra','deploy']
+    branches: ['infra', 'deploy']
 
 env:
   AWS_REGION: ap-northeast-1
@@ -10,35 +10,40 @@ env:
 jobs:
   aws_cdk:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: install npm
-        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
-
-      - name: install aws cdk
-        run: 'sudo npm install -g aws-cdk'
-
-      - name: install requirements
-        run: 'pip install -r requirements.txt'
+    defaults:
+      run:
         working-directory: infra
+    steps:
 
       - name: cdk diff
-        run: cdk diff
-        working-directory: infra
-
-      - name: cdk synth
-        run: cdk synth
-        working-directory: infra
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'diff'
+          actions_comment: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
 
       - name: cdk deploy
-        run: cdk deploy
-        working-directory: infra
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_stack: 'stack1'
+          cdk_args: '--require-approval never'
+          actions_comment: false
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+
+      - name: cdk synth
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'synth'
+          cdk_version: '1.16.2'
+          working_dir: 'src'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
