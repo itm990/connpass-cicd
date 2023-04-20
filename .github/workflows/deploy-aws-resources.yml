@@ -15,6 +15,10 @@ jobs:
         working-directory: ./infra
     steps:
 
+      - name: test step
+        run: |
+          echo ${{ github.workspace }}
+
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
