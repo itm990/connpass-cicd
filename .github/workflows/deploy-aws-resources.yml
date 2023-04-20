@@ -16,8 +16,7 @@ jobs:
     steps:
 
       - name: test step
-        run: |
-          echo ${{ github.workspace }}
+        run: ls infra
 
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
