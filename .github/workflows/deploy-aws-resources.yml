@@ -12,10 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - run: |
-          ls
-          cd ./infra
-
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v2
         with:
